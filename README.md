@@ -6,11 +6,12 @@
 
 ## 📊 View the report
 
-**[📄 Open the full Power BI report (PDF)](./POS_Manufacturing_Analytics.pdf)**
+**[📄 View the report (PDF)](./POS_Manufacturing_Analytics.pdf)**  
+**[⬇️ Download the interactive Power BI project (.pbix)](./powerbi/POS_Manufacturing_Analytics.pbix)**
 
 The report is distributed as a **static PDF export** because a public Power BI Service link is not currently available. The PDF preserves the report pages and visuals, but **slicers, tooltips, drillthrough, and other interactive Power BI features cannot be used in the PDF**.
 
-> **Repository setup:** Place `POS_Manufacturing_Analytics.pdf` in the repository root, next to this `README.md`, for the link above to work. If the `.pbix` source is included, it can be opened locally in Power BI Desktop to explore the interactive report.
+> **Repository setup:** Place `POS_Manufacturing_Analytics.pdf` in the repository root and `POS_Manufacturing_Analytics.pbix` in the `powerbi/` directory. The `.pbix` file can be downloaded and opened in Power BI Desktop to explore slicers, filters, the data model, Power Query transformations, and DAX measures.
 
 ## Project overview
 
@@ -35,7 +36,7 @@ All business data is **synthetic** and is not representative of a real company's
 | **03 · Sales & Product Analysis** | Product contribution, regional results, salesperson performance, and customer analysis. |
 | **04 · Order Details** | Order-level register, filters, financial values, and data quality indicators. |
 
-The Power BI Desktop version also supports interactions such as slicers and contextual filtering; these are not available in the PDF export.
+The downloadable [Power BI Desktop project](./powerbi/POS_Manufacturing_Analytics.pbix) supports interactions such as slicers and contextual filtering; these are not available in the PDF export.
 
 ## Selected results
 
@@ -132,16 +133,17 @@ These measures are examples of the project's use of `DISTINCTCOUNT`, `CALCULATE`
 pos-manufacturing-analytics/
 ├── README.md
 ├── POS_Manufacturing_Analytics.pdf   # Exported report for viewing
-├── POS_Manufacturing_Analytics.pbix  # Optional: Power BI Desktop source
-└── data/                             # Optional: synthetic source datasets
+├── powerbi/
+│   └── POS_Manufacturing_Analytics.pbix  # Editable Power BI Desktop report
+└── data/                                 # Optional: synthetic source datasets
 ```
 
-The `.pbix` and `data/` entries are **optional**; include them only if you decide to publish those files. The PDF link requires the PDF filename and location shown above.
+The PDF and PBIX links above work when both files are committed at the specified paths. The `data/` directory is optional.
 
 ## How to view or reproduce
 
 1. Open the **[PDF report](./POS_Manufacturing_Analytics.pdf)** to review the four report pages.
-2. If the `.pbix` file is available in the repository, download it and open it using **Power BI Desktop**.
+2. **[Download the PBIX file](./powerbi/POS_Manufacturing_Analytics.pbix)** and open it in **Power BI Desktop** to use the interactive report and inspect its model and measures.
 3. If source CSV files are provided, update their paths in **Transform data → Data source settings** as needed, then refresh the model.
 
 ## Notes and limitations
