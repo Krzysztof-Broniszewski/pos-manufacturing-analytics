@@ -1,0 +1,101 @@
+﻿ComponentID;ComponentName;Unit;ReferenceUnitCostPLN;ReorderPoint
+1;Karton GC1 / wariant 1;l;43.76;115
+2;Karton GD2 / wariant 1;mb;8.32;34
+3;Tektura falista B / wariant 1;szt;8.67;194
+4;Tektura falista EB / wariant 1;m2;17.2;153
+5;Papier kredowy / wariant 1;mb;37.89;105
+6;Papier offsetowy / wariant 1;mb;19.72;150
+7;Folia PET / wariant 1;mb;6.04;98
+8;Folia PP / wariant 1;szt;25.96;195
+9;Folia stretch / wariant 1;kg;3.48;94
+10;Folia laminacyjna / wariant 1;szt;29.35;48
+11;Farba CMYK / wariant 1;kg;35.65;173
+12;Lakier UV / wariant 1;m2;18.08;106
+13;Klej dyspersyjny / wariant 1;m2;23.58;84
+14;Klej hot-melt / wariant 1;mb;13.59;100
+15;Taśma dwustronna / wariant 1;szt;32.39;82
+16;Element plastikowy / wariant 1;l;9.07;158
+17;Profil aluminiowy / wariant 1;kg;23.05;101
+18;Nóżka metalowa / wariant 1;kg;29.83;197
+19;Śruba montażowa / wariant 1;szt;43.05;188
+20;Opakowanie zbiorcze / wariant 1;l;8.77;152
+21;Karton GC1 / wariant 2;szt;11.16;165
+22;Karton GD2 / wariant 2;szt;8.78;104
+23;Tektura falista B / wariant 2;kg;34.35;129
+24;Tektura falista EB / wariant 2;l;29.61;29
+25;Papier kredowy / wariant 2;szt;34.55;156
+26;Papier offsetowy / wariant 2;szt;14.48;52
+27;Folia PET / wariant 2;kg;20.11;199
+28;Folia PP / wariant 2;kg;37.23;139
+29;Folia stretch / wariant 2;szt;42.16;193
+30;Folia laminacyjna / wariant 2;l;23.82;76
+31;Farba CMYK / wariant 2;l;23.47;162
+32;Lakier UV / wariant 2;m2;39.38;163
+33;Klej dyspersyjny / wariant 2;kg;5.83;70
+34;Klej hot-melt / wariant 2;l;19.48;35
+35;Taśma dwustronna / wariant 2;mb;5.14;96
+36;Element plastikowy / wariant 2;kg;34.35;24
+37;Profil aluminiowy / wariant 2;szt;4.18;130
+38;Nóżka metalowa / wariant 2;szt;22.2;169
+39;Śruba montażowa / wariant 2;l;14.1;117
+40;Opakowanie zbiorcze / wariant 2;szt;25.09;24
+41;Karton GC1 / wariant 3;mb;23.39;167
+42;Karton GD2 / wariant 3;kg;21.56;135
+43;Tektura falista B / wariant 3;l;38.86;200
+44;Tektura falista EB / wariant 3;mb;37.93;47
+45;Papier kredowy / wariant 3;mb;43.78;74
+46;Papier offsetowy / wariant 3;kg;43.26;169
+47;Folia PET / wariant 3;kg;17.86;41
+48;Folia PP / wariant 3;l;3.19;95
+49;Folia stretch / wariant 3;kg;27.8;107
+50;Folia laminacyjna / wariant 3;szt;7.78;185
+51;Farba CMYK / wariant 3;kg;33.33;133
+52;Lakier UV / wariant 3;szt;23.54;67
+53;Klej dyspersyjny / wariant 3;l;34.04;149
+54;Klej hot-melt / wariant 3;szt;12.81;144
+55;Taśma dwustronna / wariant 3;kg;1.53;14
+56;Element plastikowy / wariant 3;kg;28.77;141
+57;Profil aluminiowy / wariant 3;szt;25.18;35
+58;Nóżka metalowa / wariant 3;szt;33.12;195
+59;Śruba montażowa / wariant 3;mb;9.16;34
+60;Opakowanie zbiorcze / wariant 3;m2;32.07;86
+61;Karton GC1 / wariant 4;kg;5.8;199
+62;Karton GD2 / wariant 4;l;1.53;45
+63;Tektura falista B / wariant 4;mb;28.07;7
+64;Tektura falista EB / wariant 4;szt;4.44;16
+65;Papier kredowy / wariant 4;szt;38.46;20
+66;Papier offsetowy / wariant 4;mb;16.59;83
+67;Folia PET / wariant 4;mb;38.14;16
+68;Folia PP / wariant 4;l;28.42;189
+69;Folia stretch / wariant 4;m2;19.92;164
+70;Folia laminacyjna / wariant 4;m2;10.09;96
+71;Farba CMYK / wariant 4;m2;34.75;65
+72;Lakier UV / wariant 4;l;41.3;31
+73;Klej dyspersyjny / wariant 4;szt;38.68;10
+74;Klej hot-melt / wariant 4;m2;32.97;24
+75;Taśma dwustronna / wariant 4;kg;21.1;14
+76;Element plastikowy / wariant 4;szt;3.12;66
+77;Profil aluminiowy / wariant 4;kg;14.46;26
+78;Nóżka metalowa / wariant 4;m2;27.12;191
+79;Śruba montażowa / wariant 4;mb;1.74;153
+80;Opakowanie zbiorcze / wariant 4;m2;13.29;184
+81;Karton GC1 / wariant 5;l;40.12;18
+82;Karton GD2 / wariant 5;l;43.5;78
+83;Tektura falista B / wariant 5;l;16.76;179
+84;Tektura falista EB / wariant 5;l;27.13;139
+85;Papier kredowy / wariant 5;kg;23.17;52
+86;Papier offsetowy / wariant 5;l;3.07;76
+87;Folia PET / wariant 5;l;30.19;196
+88;Folia PP / wariant 5;kg;7.73;173
+89;Folia stretch / wariant 5;szt;0.8;149
+90;Folia laminacyjna / wariant 5;kg;36.38;13
+91;Farba CMYK / wariant 5;mb;43.12;179
+92;Lakier UV / wariant 5;l;19.98;113
+93;Klej dyspersyjny / wariant 5;m2;44.39;33
+94;Klej hot-melt / wariant 5;mb;15.63;164
+95;Taśma dwustronna / wariant 5;szt;37.03;30
+96;Element plastikowy / wariant 5;szt;2.56;154
+97;Profil aluminiowy / wariant 5;szt;15.46;69
+98;Nóżka metalowa / wariant 5;szt;29.55;138
+99;Śruba montażowa / wariant 5;mb;6.0;56
+100;Opakowanie zbiorcze / wariant 5;m2;2.17;32

@@ -1,0 +1,125 @@
+WPROWADZANIE MIAR
+Total Orders =
+DISTINCTCOUNT(FactSalesOrders_FINAL[OrderID])
+Funkcja DISTINCTCOUNT() liczy unikalne identyfikatory zamówień.
+
+Completed Orders =
+CALCULATE(
+    [Total Orders],
+    FactSalesOrders_FINAL[OrderStatus_Clean] = "Completed"
+)
+
+FILTER w CALCULATE
+Completed Orders FILTER =
+CALCULATE(
+    [Total Orders],
+    FILTER(
+        FactSalesOrders_FINAL,
+        FactSalesOrders_FINAL[OrderStatus_Clean] = "Completed"
+    )
+)
+
+
+
+
+WYKRESY BARCODE POZIOMY
+Różnice są następujące:
+- Grupowany — porównuje wartości między produktami. Najlepszy do naszego zadania.
+- Skumulowany — pokazuje dodatkowo podział każdego słupka, np. według statusu zamówienia.
+- 100% skumulowany — pokazuje udziały procentowe, a nie bezpośrednio liczbę zamówień.
+
+skumulowany wykres slupkowy
+os X region
+os Y miara total orders
+legenda na co chcemy podzielić pasek
+
+
+Wartość pojedynczego zamówienia obliczamy następująco:
+\[
+\text{Wartość}=\text{Ilość}\times\text{Cena}\times(1-\text{Rabat})
+\]
+
+SUM() vs SUMX()
+SUM OBLICZA JEDNĄ KOLUMNĘ 
+SUMX PRZECHODZI PO KOLUMNACH W WIERSZACH
+
+FORMAT WALUTOWY
+#,##0.00 "PLN"
+
+Completed Order Value =
+CALCULATE(
+    [Valid Order Value],
+    FactSalesOrders_FINAL[OrderStatus_Clean] = "Completed"
+)
+
+Orders All Dates =
+CALCULATE(
+    [Total Orders],
+    REMOVEFILTERS(DimDate)
+)
+
+Orders All Dates ALL =
+CALCULATE(
+    [Total Orders],
+    ALL(DimDate)
+)
+
+Selected Month =
+VAR SelectedMonths =
+    SUMMARIZE(
+        DimDate,
+        DimDate[MonthName],
+        DimDate[MonthNumber]
+    )
+RETURN
+    IF(
+        ISFILTERED(DimDate[MonthName]),
+        CONCATENATEX(
+            SelectedMonths,
+            DimDate[MonthName],
+            ", ",
+            DimDate[MonthNumber],
+            ASC
+        ),
+        "Wszystkie miesiące"
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

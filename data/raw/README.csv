@@ -1,0 +1,16 @@
+﻿Topic;Description
+Project;POSPrint Manufacturing — synthetic Power BI training data
+Data period;2024-01-01 to 2026-10-20
+Currency;PLN
+Source;100% synthetic, not Walstead company records
+CSV delimiter;"semicolon ; (UTF-8 BOM)"
+Grain FactSalesOrders;1 row = 1 order
+Grain FactSalesLines;1 row = 1 order line
+Grain FactProduction;1 row = 1 produced order line
+Grain FactPurchases;1 row = 1 purchase line
+Grain BridgeBOM;1 row = 1 product-component relation
+Important;"OrderDate/ProductionDate/ReceiptDate are role-playing dates; use dedicated date relationships"
+Important;Revenue is order-line sales value, not accounting-recognized revenue
+Important;"Costs are synthetic estimated actuals; BOM reference unit costs are not directly reconciled to FactProductionCosts"
+Important;"Purchases are independent simulated transactions; no inventory ledger or purchase-to-production allocation"
+Important;Production and deliveries exist only for completed orders

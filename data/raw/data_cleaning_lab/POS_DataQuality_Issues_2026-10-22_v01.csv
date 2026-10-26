@@ -1,0 +1,34 @@
+﻿OrderID,IssueType,IssueValue,ReviewStatus
+ORD-00003,Missing CustomerID,,Pending
+ORD-00007,Unknown ProductID,9999,Pending
+ORD-00008,Unknown CustomerID,999,Pending
+ORD-00012,Missing or invalid quantity,"",Pending
+ORD-00017,Missing or invalid quantity,abc,Pending
+ORD-00019,Missing CustomerID,,Pending
+ORD-00027,Negative quantity,'-4,Pending
+ORD-00031,Negative price,'-99,Pending
+ORD-00034,Conflicting OrderID,85 vs 999,Pending
+ORD-00035,Invalid date,31.02.2026,Pending
+ORD-00040,Missing date,"",Pending
+ORD-00045,Discount over 100%,1.2,Pending
+ORD-00047,Delivery before order,Order: 2026-01-20 | Delivery: 2025-12-01,Pending
+ORD-00051,Missing CustomerID,,Pending
+ORD-00055,Missing SalespersonID,,Pending
+ORD-00058,Unknown ProductID,9999,Pending
+ORD-00061,Unknown CustomerID,999,Pending
+ORD-00071,Invalid date,2026-13-08,Pending
+ORD-00076,Unknown SalespersonID,25,Pending
+ORD-00086,Missing or invalid quantity,"",Pending
+ORD-00107,Missing CustomerID,,Pending
+ORD-00110,Negative discount,'-0.05,Pending
+ORD-00117,Missing date,N/A,Pending
+ORD-00130,Zero quantity,0,Pending
+ORD-00136,Missing SalespersonID,,Pending
+ORD-00143,Unknown CustomerID,999,Pending
+ORD-00166,Missing or invalid quantity,"",Pending
+ORD-00174,Missing CustomerID,,Pending
+ORD-00182,Invalid date,not a date,Pending
+ORD-00191,Unknown ProductID,9999,Pending
+ORD-00197,Unknown SalespersonID,25,Pending
+ORD-00212,Zero price,0,Pending
+ORD-00222,Delivery before order,Order: 2026-06-10 | Delivery: 2026-01-01,Pending

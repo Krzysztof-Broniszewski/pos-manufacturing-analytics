@@ -1,0 +1,59 @@
+# ==================================
+# Main
+# ==================================
+creating-process.txt
+
+# ==================================
+# Python
+# ==================================
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.conda/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# ==================================
+# Power BI
+# ==================================
+
+# Power BI temporary files
+*.pbitmp
+*.tmp
+*.bak
+
+# Power BI project local settings/cache
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# ==================================
+# Data
+# ==================================
+
+# Processed and temporary data
+data/processed/*
+!data/processed/.gitkeep
+
+# ==================================
+# IDE / OS
+# ==================================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ==================================
+# Logs
+# ==================================
+*.log
+logs/

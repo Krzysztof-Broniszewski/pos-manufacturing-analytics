@@ -1,0 +1,31 @@
+﻿CustomerID;CustomerName;Industry;Region;CustomerSegment
+1;MarketMax;Electronics;Śląskie;Key Account
+2;FreshPoint;Electronics;Małopolskie;Growth
+3;Nova Cosmetics;Electronics;Małopolskie;Key Account
+4;Vita Foods;FMCG;Śląskie;Growth
+5;Bello Beauty;Retail;Małopolskie;Key Account
+6;GreenMart;Electronics;Małopolskie;Growth
+7;ElectroZone;Retail;Pomorskie;Key Account
+8;PharmaPlus;Retail;Małopolskie;Key Account
+9;Coffee Street;Retail;Małopolskie;Growth
+10;PetLand;Food;Śląskie;Standard
+11;Smart Home;Electronics;Śląskie;Key Account
+12;SportLine;Food;Dolnośląskie;Growth
+13;OptiMarket;Food;Małopolskie;Standard
+14;Beverage Hub;Retail;Małopolskie;Growth
+15;Urban Retail;Pharma;Pomorskie;Key Account
+16;Premium Care;Pharma;Mazowieckie;Standard
+17;Eco Foods;Retail;Dolnośląskie;Standard
+18;Family Shop;Retail;Śląskie;Growth
+19;MediStore;Pharma;Mazowieckie;Key Account
+20;Sweet Factory;FMCG;Śląskie;Key Account
+21;Health First;Retail;Małopolskie;Standard
+22;ProTools;Food;Mazowieckie;Key Account
+23;Beauty Club;Pharma;Dolnośląskie;Growth
+24;Home Style;Food;Pomorskie;Standard
+25;Food Planet;Pharma;Mazowieckie;Growth
+26;Retail One;Retail;Dolnośląskie;Standard
+27;Active Sport;Retail;Mazowieckie;Standard
+28;Tech Planet;Electronics;Śląskie;Standard
+29;Fresh Choice;Electronics;Dolnośląskie;Standard
+30;Delizia;Retail;Mazowieckie;Key Account

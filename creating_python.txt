@@ -1,0 +1,435 @@
+import pandas as pd
+
+df = pd.read_csv("DimCustomer.csv")
+
+df.info()
+df.isna().sum()
+df.duplicated().sum()
+
+usuwanie poszczegolnej frazy z nazwy klienta
+df["CustomerShortName"] = (
+    df["CustomerName"]
+    .str.removesuffix(" Polska")
+)
+
+df["CustomerID"].nunique()
+df["CustomerID"].isna().sum()
+df["CustomerID"].duplicated().sum()
+
+df["CustomerID"] = df["CustomerID"].astype("int64")
+
+df["Region"].value_counts()
+
+df = pd.read_csv("DimCustomer.csv")
+df["CustomerID"] = df["CustomerID"].astype("int64")
+
+df["SalespersonID"].is_unique
+
+df_training = df_customers.copy()
+
+sprawdzam duplikaty
+df.groupby("OrderID").size().loc[lambda x: x > 1]
+
+
+df_clean = df.drop_duplicates()
+
+conflicts = df_clean.loc[
+    df_clean["OrderID"] == "ORD-00034"
+].copy()
+
+df_report = df_clean[
+    ~df_clean["OrderID"].isin(conflicts["OrderID"])
+]
+
+usuwanie spacji na poczatku i koncu
+# Przekazanie funkcji
+map(str.strip, values)
+
+# Funkcja anonimowa
+map(lambda x: x.strip(), values)
+
+df["OrderID"] = df["OrderID"].str.upper()
+
+df["OrderID_Status"] = df["OrderID_Status"].astype("string")
+
+missing = df[df["OrderID_Status"] == "Missing ID"]
+
+clean = df[df["OrderID_Status"] != "Missing ID"].copy()
+
+parsowanie dat
+pd.to_datetime(
+    df["OrderDate"],
+    format="%Y-%m-%d",
+    errors="coerce"
+)
+
+df = df.drop(columns=["Audit_ConflictingOrders"])
+
+poprawność ilosci
+pd.to_numeric(
+    df["Quantity"].str.strip(),
+    errors="coerce"
+)
+
+quantity % 1 != 0
+
+df[["OrderID", "Quantity", "Quantity_Parsed", "Quantity_Status"]]
+
+cleaned = df["Quantity"].str.replace(
+    r"\s*szt\.$", "", regex=True
+).str.strip()
+
+df["Quantity_Clean"] = pd.to_numeric(
+    cleaned, errors="coerce"
+)
+
+quantity_issues = df.loc[
+    df["Quantity_FinalStatus"] != "Valid"
+].copy()
+
+df["UnitPrice_Parsed"] = pd.to_numeric(
+    df["UnitPricePLN"].str.strip(),
+    errors="coerce"
+)
+
+cleaned = (
+    df["UnitPricePLN"]
+    .str.replace("zł", "", regex=False)
+    .str.replace(" ", "", regex=False)
+    .str.replace(",", ".", regex=False)
+    .str.strip()
+)
+
+df["UnitPrice_Clean"] = pd.to_numeric(
+    cleaned, errors="coerce"
+)
+
+POSTGRESQL WALIDACJA
+CREATE TABLE sales_orders (
+    order_id VARCHAR(20) PRIMARY KEY,
+    order_date DATE NOT NULL,
+    quantity INTEGER NOT NULL CHECK (quantity > 0),
+    unit_price NUMERIC(12,2) NOT NULL CHECK (unit_price >= 0),
+    customer_id INTEGER NOT NULL
+        REFERENCES customers(customer_id)
+);
+
+affected_ids = set(dq_affected_orders["OrderID"])
+
+df["HasDataQualityIssue"] = (
+    df["OrderID"].isin(affected_ids)
+)
+
+df["IsRevenueValid"] = (
+    df["Quantity_Clean"].gt(0)
+    & df["UnitPrice_Clean"].gt(0)
+    & df["DiscountPct"].between(0, 1)
+)
+
+valid = df.loc[df["IsRevenueValid"]]
+
+order_value = (
+    valid["Quantity_Clean"]
+    * valid["UnitPrice_Clean"]
+    * (1 - valid["DiscountPct"])
+)
+
+total_order_value = order_value.sum()
+
+łączenie relacji tabel w pandas
+df_merged = fact_sales_orders.merge(
+    dim_date,
+    left_on="OrderDate_Parsed",
+    right_on="Date",
+    how="left",
+    validate="many_to_one"
+)
+
+fact_sales_orders.merge(
+    dim_customer,
+    on="CustomerID",
+    how="left",
+    validate="many_to_one"
+)
+
+result = fact_sales_orders.merge(
+    dim_customer[["CustomerID", "CustomerName"]],
+    on="CustomerID",
+    how="left",
+    validate="many_to_one"
+)
+
+print(result[["CustomerName", "OrderID"]])
+
+ODPOWIEDNIK MIARY DAX
+total_orders = df["OrderID"].nunique()
+
+orders_by_month = (
+    df.groupby("MonthName")["OrderID"]
+      .nunique()
+)
+orders_by_month.plot(kind="bar")
+
+orders_by_product = (
+    df.merge(dim_product, on="ProductID", how="left")
+      .groupby("ProductName")["OrderID"]
+      .nunique()
+      .sort_values(ascending=False)
+)
+
+orders_by_product.plot(kind="barh")
+
+orders_by_region = (
+    df.groupby(
+        ["SalesRegion_Clean", "OrderStatus_Clean"]
+    )["OrderID"]
+    .nunique()
+    .unstack(fill_value=0)
+)
+
+orders_by_region.plot(
+    kind="barh",
+    stacked=True
+)
+
+df.groupby(
+    ["SalesRegion_Clean", "OrderStatus_Clean"],
+    dropna=False
+)["OrderID"].nunique()
+
+selected_orders = df.loc[
+    (df["SalesRegion_Clean"] == "Śląskie")
+    & (df["OrderStatus_Clean"] == "Completed")
+]
+
+total = selected_orders["OrderID"].nunique()
+
+# Wynik ogólny — bez dodatkowego filtrowania
+total_orders = df["OrderID"].nunique()
+
+# Wynik dla zaznaczonego regionu i statusu
+selected = df.loc[
+    (df["SalesRegion_Clean"] == "Śląskie")
+    & (df["OrderStatus_Clean"] == "Completed")
+]
+
+selected_orders = selected["OrderID"].nunique()
+
+completed_orders = (
+    df.loc[df["OrderStatus_Clean"] == "Completed", "OrderID"]
+      .nunique()
+)
+
+monthly_orders = (
+    df.groupby("MonthName")["OrderID"]
+      .nunique()
+)
+
+monthly_completed = (
+    df.loc[df["OrderStatus_Clean"] == "Completed"]
+      .groupby("MonthName")["OrderID"]
+      .nunique()
+)
+
+FILTER()
+completed = df.loc[
+    df["OrderStatus_Clean"] == "Completed"
+]
+
+CALCULATE()
+completed_orders = (
+    df.loc[df["OrderStatus_Clean"] == "Completed", "OrderID"]
+      .nunique()
+)
+
+completed_valid_orders = (
+    df.loc[
+        (df["OrderStatus_Clean"] == "Completed")
+        & (df["IsRevenueValid"]),
+        "OrderID"
+    ]
+    .nunique()
+)
+
+completed_invalid_orders = (
+    completed_orders - completed_valid_orders
+)
+
+TABELA DIAGNOSTYCZNA
+invalid_completed = df.loc[
+    (df["OrderStatus_Clean"] == "Completed")
+    & (df["IsRevenueValid"] == False),
+    [
+        "OrderID",
+        "Quantity_Clean",
+        "UnitPrice_Clean",
+        "DiscountPct"
+    ]
+]
+
+print(invalid_completed)
+
+completed_valid_rate = (
+    completed_valid_orders / completed_orders
+    if completed_orders != 0
+    else 0
+)
+
+order_values = (
+    df["Quantity_Clean"]
+    * df["UnitPrice_Clean"]
+    * (1 - df["DiscountPct"])
+)
+
+total_value = order_values.sum()
+
+valid = df.loc[df["IsRevenueValid"] == True]
+
+total_value = (
+    valid["Quantity_Clean"]
+    * valid["UnitPrice_Clean"]
+    * (1 - valid["DiscountPct"])
+).sum()
+
+completed = df.loc[
+    (df["OrderStatus_Clean"] == "Completed")
+    & (df["IsRevenueValid"] == True)
+]
+
+completed_value = (
+    completed["Quantity_Clean"]
+    * completed["UnitPrice_Clean"]
+    * (1 - completed["DiscountPct"])
+).sum()
+
+completed = df.loc[
+    (df["OrderStatus_Clean"] == "Completed")
+    & (df["IsRevenueValid"])
+]
+
+order_values = (
+    completed["Quantity_Clean"]
+    * completed["UnitPrice_Clean"]
+    * (1 - completed["DiscountPct"])
+)
+
+aov = (
+    order_values.sum() / completed["OrderID"].nunique()
+    if completed["OrderID"].nunique() > 0
+    else None
+)
+
+# Zamówienia w wybranym miesiącu
+monthly_orders = df.loc[
+    df["MonthNumber"] == 3,
+    "OrderID"
+].nunique()
+
+# Zamówienia niezależnie od miesiąca
+all_orders = df["OrderID"].nunique()
+
+monthly_orders = df.groupby("MonthNumber")["OrderID"].nunique()
+
+all_orders = df["OrderID"].nunique()
+
+monthly_share = monthly_orders / all_orders * 100
+
+selected_months = df["MonthName"].dropna().unique()
+
+selected_month = (
+    selected_months[0]
+    if len(selected_months) == 1
+    else "Wszystkie miesiące"
+)
+
+chart_title = "Zamówienia — " + selected_month
+chart_title = f"Zamówienia — {selected_month}"
+
+selected_month = "marzec"
+
+filtered_df = df.loc[
+    df["MonthName"] == selected_month
+]
+
+total_orders = filtered_df["OrderID"].nunique()
+
+
+selected_months = ["styczeń", "luty", "marzec"]
+
+selected_text = ", ".join(selected_months)
+
+print(selected_text)
+
+months = (
+    df[["MonthName", "MonthNumber"]]
+    .drop_duplicates()
+    .sort_values("MonthNumber")
+)
+
+selected_text = ", ".join(months["MonthName"])
+
+completed = df.loc[
+    df["OrderStatus_Clean"] == "Completed",
+    "OrderID"
+].nunique()
+
+total = df["OrderID"].nunique()
+
+completed_rate = completed / total if total else None
+
+selected_months = ["styczeń", "luty", "marzec"]
+
+selected_df = df.loc[
+    df["MonthName"].isin(selected_months)
+]
+
+orders_selected = selected_df["OrderID"].nunique()
+
+
+selected_months = ["styczeń", "luty", "marzec"]
+
+selected_orders = df.loc[
+    df["MonthName"].isin(selected_months),
+    "OrderID"
+].nunique()
+
+orders_with_issues = (
+    df.loc[df["HasDataQualityIssue"] == True, "OrderID"]
+      .nunique()
+)
+
+issue_rate = (
+    df.loc[df["HasDataQualityIssue"], "OrderID"].nunique()
+    / df["OrderID"].nunique()
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

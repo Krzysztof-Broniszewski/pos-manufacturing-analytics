@@ -1,0 +1,26 @@
+﻿SupplierID;SupplierName;Category;Country;StandardLeadTimeDays
+1;PaperPol;Packaging;Polska;2
+2;Cartonix;Adhesives;Polska;5
+3;InkTech;Paper;Polska;13
+4;PrintChem;Packaging;Polska;12
+5;FoliaPro;Hardware;Polska;10
+6;Adhesive Lab;Adhesives;Polska;4
+7;PackLine;Packaging;Polska;7
+8;PlasticForm;Cardboard;Polska;2
+9;MetalPoint;Paper;Polska;12
+10;EcoBoard;Packaging;Polska;12
+11;ColorMix;Cardboard;Polska;9
+12;PaperTrade;Adhesives;Polska;14
+13;FoilMaster;Foil;Polska;11
+14;GlueWorks;Cardboard;Polska;6
+15;BoxSupply;Paper;Polska;15
+16;Digital Media;Hardware;Polska;12
+17;FlexiPrint;Ink;Polska;6
+18;LamiTech;Ink;Polska;12
+19;PolyParts;Foil;Polska;12
+20;FixingPro;Foil;Niemcy;8
+21;StandTech;Foil;Czechy;5
+22;EcoPack;Foil;Niemcy;6
+23;VarnishLab;Packaging;Czechy;9
+24;PrintBase;Paper;Niemcy;8
+25;FastLog;Adhesives;Czechy;11

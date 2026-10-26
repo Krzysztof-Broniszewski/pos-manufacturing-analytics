@@ -1,0 +1,374 @@
+conda create -n analysis python=3.12 -y
+
+git branch --show-current
+albo
+git branch -a
+
+jeśli nie
+git branch -M main
+
+jeśli git push wywali błąd:
+error: failed to push some refs to 'https://github.com/Krzysztof-Broniszewski/pos-manufacturing-analytics.git'
+trzba dodać plik i zacommitować zmiany
+git add README.md
+git commit -m "Initial project setup"
+
+pierwszy push zawsze
+git push -u origin main
+potem samo git push
+
+.gitignore
+"""
+# ==================================
+# Python
+# ==================================
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.conda/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# ==================================
+# Power BI
+# ==================================
+
+# Power BI temporary files
+*.pbitmp
+*.tmp
+*.bak
+
+# Power BI project local settings/cache
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# ==================================
+# Data
+# ==================================
+
+# Processed and temporary data
+data/processed/*
+!data/processed/.gitkeep
+
+# ==================================
+# IDE / OS
+# ==================================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ==================================
+# Logs
+# ==================================
+*.log
+logs/
+"""
+
+start "" "C:\Program Files\Microsoft Power BI Desktop\bin\PBIDesktop.exe"
+
+nazywnictwo tabel
+Dim Customer
+
+w widok danych włączam 
+profil, jakosc, szczegoly(rozklad)
+
+CZYSZCZENIE DANYCH
+Najpierw ID
+W tabeli "Odwolanie" Reference
+Narzędzia glowne/Transformacja/Grupuj wedlug
+w nowej kolumnie zlicz wiersze
+
+- duplikaty
+- w Polacz/Scal zapytania
+
+USUWANIE SPACJI NA POCZATKU I KONCU - najpierw clean potem trim
+
+WYCZYSC
+Table.TransformColumns(#"Przycięty tekst", {{"OrderID", each Text.Clean(_), type nullable text}})
+
+Transformacja/Format/Przytnij
+Table.TransformColumns(
+    #"Scalone zapytania",
+    {{"OrderID", each Text.Trim(_), type nullable text}}
+)
+
+WALIDACJA DANYCH w KOLUMNA NIESTANDARDOWA
+if [OrderID] = null or [OrderID] = "" then
+    "Missing ID"
+else if
+    Text.Length([OrderID]) = 9
+    and Text.StartsWith([OrderID], "ORD-")
+    and Text.Length(
+        Text.Select(
+            Text.End([OrderID], 5),
+            {"0".."9"}
+        )
+    ) = 5
+then
+    "Valid"
+else
+    "Invalid format"
+
+W Power Query mamy trzy różne sposoby wykluczania danych:
+- Filtr — gdy warunek jest dostępny w tej samej tabeli.
+- Left Anti Join — gdy lista wykluczeń pochodzi z niezależnej tabeli.
+- Odwołanie (Reference) — gdy chcemy utworzyć nowe zapytanie na podstawie innego.
+
+PARSOWANIE DAT
+try Date.FromText(
+    [OrderDate],
+    [Format="yyyy-MM-dd", Culture="en-US"]
+)
+otherwise null
+
+OrderDate_Status
+if [OrderDate_Parsed] <> null then
+    "Valid"
+else if [OrderDate] = null
+    or Text.Trim([OrderDate]) = ""
+    or Text.Upper(Text.Trim([OrderDate])) = "N/A" then
+    "Missing date"
+else
+    "Invalid date"
+
+QUANTITY PARSED
+try Number.FromText(
+    Text.Trim([Quantity]),
+    "en-US"
+)
+otherwise null
+
+Table.SelectColumns(
+    #"Poprzedni krok",
+    {"OrderID", "Quantity", "Quantity_Parsed", "Quantity_Status"}
+)
+
+uczymy się prawidłowej kolejności ETL:
+diagnoza → 
+ustalenie reguły → 
+naprawa → 
+ponowna walidacja
+
+let
+    raw = [UnitPricePLN],
+    cleaned =
+        if raw = null then null
+        else
+            Text.Replace(
+                Text.Replace(
+                    Text.Replace(
+                        Text.Lower(Text.Trim(raw)),
+                        "zł", ""
+                    ),
+                    Character.FromNumber(160), ""
+                ),
+                " ", ""
+            ),
+    normalized =
+        if cleaned = null then null
+        else if Text.Contains(cleaned, ",") then
+            Text.Replace(
+                Text.Replace(cleaned, ".", ""),
+                ",", "."
+            )
+        else
+            cleaned,
+    result =
+        try Number.FromText(normalized, "en-US")
+        otherwise null
+in
+    result
+
+!!! KOLEJNOSC !!!
+dodać kolumnę Status
+if [DiscountPct] = null then
+    "Missing discount"
+else if [DiscountPct] < 0 then
+    "Negative discount"
+else if [DiscountPct] > 1 then
+    "Discount over 100%"
+else
+    "Valid"
+
+Dodać tabele Audit_DiscountIssues
+
+SCAL ZAPYTANIA ABYY SPRAWDZIC KLUCZE OBCE
+TEN SAM TYP DANYCH MUSZA MIEC
+ID Z SALES
+ID Z CUSTOMER
+LEFT ANTI JOIN
+
+Data dostawy nie powinna być większa od daty zamówienia
+if [OrderDate_Parsed] = null then
+    "Invalid order date"
+else if [DeliveryDate] = null then
+    "Missing delivery date"
+else if [OrderDate_Parsed] > [DeliveryDate] then
+    "Delivery before order"
+else
+    "Valid"
+
+Status zamówienia do sprawdzenia
+let
+    status = Text.Proper(
+        Text.Trim(
+            Text.Clean([OrderStatus])
+        )
+    )
+in
+    if status = "Complete" then "Completed"
+    else status
+
+SPRAWDZANIE LIST
+let
+    region = Text.Lower(Text.Trim(Text.Clean([SalesRegion])))
+in
+    if region = "" then null
+    else if List.Contains({"malopolskie", "małopolskie"}, region) then "Małopolskie"
+    else if List.Contains({"slaskie", "śląskie"}, region) then "Śląskie"
+    else if region = "mazowieckie" then "Mazowieckie"
+    else if region = "pomorskie" then "Pomorskie"
+    else if region = "dolnośląskie" then "Dolnośląskie"
+    else null
+
+!!! DATA QUALITY !!! KLUCZE OBCE
+ORDER ID
+TYPE
+VALUE
+REVIEWSTATUS
+
+Nowa kolumna
+if [SalespersonID] = null then
+    "Missing SalespersonID"
+else
+    "Unknown SalespersonID"
+
+Zostawiam tylko kolumny id
+
+dodaję kolumnę Type
+if [CustomerID] = null then
+    "Missing CustomerID"
+else
+    "Unknown CustomerID"
+
+dodaję kolumnę Value
+if [CustomerID] = null then
+    null
+else
+    Text.From([CustomerID])
+
+dodaję kolumnę ReviewStatus z wartoscia Pending
+
+Dołącz zapytania jako nowe
+inaczej w języko M
+Table.Combine({
+    DQ_CustomerIssues,
+    DQ_ProductIssues,
+    DQ_SalespersonIssues
+})
+
+do marży
+if [DiscountPct] = null then
+    null
+else
+    Text.From([DiscountPct], "en-US")
+
+Porównanie dat zamówienia dostawy
+"Order: "
+    & Date.ToText([OrderDate_Parsed], "yyyy-MM-dd")
+    & " | Delivery: "
+    & Date.ToText([DeliveryDate], "yyyy-MM-dd")
+
+konflikt wartości w duplikatach
+Text.Combine(
+    List.Transform(
+        Table.Column([ConflictingValues], "Quantity"),
+        each if _ = null then "null" else Text.From(_)
+    ),
+    " vs "
+)
+
+Zamówienie może zostać uwzględnione w obliczeniach przychodu, jeżeli:
+- Quantity_Clean jest liczbą większą od zera.
+- UnitPrice_Clean jest liczbą większą od zera.
+- DiscountPct mieści się w przedziale od 0 do 1.
+
+Oznacz jako tabela dat, włącz oznaczenie i wybierz kolumnę Date
+
+Tworzymy 2 kolumny aby pracować na niedokończonych danych:
+HasDataQualityIssue
+not Table.IsEmpty([DQ_AffectedOrders])
+IsRevenueValid
+each let
+    qty = try Number.From([Quantity_Clean]) otherwise null,
+    price = try Number.From([UnitPrice_Clean]) otherwise null,
+    discount = try Number.From([DiscountPct]) otherwise null
+in
+    if qty = null or price = null or discount = null then false
+    else qty > 0
+        and price > 0
+        and discount >= 0
+        and discount <= 1)
+
+TABELA KALENDARZ
+Modelowanie/NowaTabela
+DimDate =
+CALENDAR(
+    DATE(2026, 1, 1),
+    DATE(2026, 12, 31)
+)
+
+Year = YEAR(DimDate[Date])
+MonthNumber = MONTH(DimDate[Date])
+MonthName = FORMAT(DimDate[Date], "MMMM", "pl-PL")
+Sortuj według kolumny/MonthNumber
+Quarter = "Q" & QUARTER(DimDate[Date])
+YearMonth = FORMAT(DimDate[Date], "yyyy-MM")
+DayOfWeekNumber = WEEKDAY(DimDate[Date], 2)
+DayOfWeekName = FORMAT(DimDate[Date], "dddd", "pl-PL")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
